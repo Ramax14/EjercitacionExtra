@@ -43,9 +43,9 @@ public class Main {
                 m = read.nextInt();
                 MetodoMatriz(read,n,m);
             } else if (opcion == 4) {
-
+                GenerarTabla(read);
             } else if (opcion == 5) {
-
+                Convertidor(read);
             } else if (opcion == 0) {
                 continue;
             }else
@@ -95,7 +95,7 @@ public class Main {
             System.out.println("0- Salir.");
             option = read.nextInt();
             if (option == 1){
-                System.out.println("La suma de todos los elementos es: "+SumaDeProductos(matriz, n-1, m-1, n-1));
+                System.out.println("La suma de todos los elementos es: "+SumaTotal(matriz, n-1, m-1, n-1));
             }
             else if(option == 2){
                 System.out.println("El producto de todos sus elementos es: "+ProductoTotal(matriz,n-1,m-1,n-1));
@@ -105,23 +105,188 @@ public class Main {
                 }else{
                     System.out.println("La suma de los elementos en la diagonal principal es: "+SumaPrincipal(matriz,n));
                 }
+            } else if(option == 4){
+                if(n>m){
+                    System.out.println("El producto de los elementos en la diagonal principal es: "+ProductoPrincipal(matriz,m));
+                }else{
+                    System.out.println("El producto de los elementos en la diagonal principal es: "+ProductoPrincipal(matriz,n));
+                }
+            } else if(option == 5){
+                if(n>m){
+                    System.out.println("La suma de los elementos en la diagonal secundaria es: "+SumaSecundario(matriz,m));
+                }else{
+                    System.out.println("La suma de los elementos en la diagonal secundaria es: "+SumaSecundario(matriz,n));
+                }
+            } else if(option == 6){
+                if(n>m){
+                    System.out.println("El producto de los elementos en la diagonal secundaria es: "+ProductoSecundario(matriz,m));
+                }else{
+                    System.out.println("El producto de los elementos en la diagonal secundaria es: "+ProductoSecundario(matriz,n));
+                }
+            } else if(option == 0){
+                continue;
+            } else {
+                System.out.println("Opción incorrecta. Intente nuevamente.");
             }
+
         }while (option != 0);
-
-
-
 
     }
 
-    public static int SumaDeProductos(int [][] mat, int n, int m, int i){
+    public static int SumaTotal(int [][] mat, int n, int m, int i){
 
         if(n == 0 && m == 0){
             return mat[n][m];
         }
         else if(n == 0){
-            return mat[n][m]+SumaDeProductos(mat,i,m-1,i);
+            return mat[n][m]+SumaTotal(mat,i,m-1,i);
         }
         else
-            return mat[n][m]+SumaDeProductos(mat,n-1,m,i);
+            return mat[n][m]+SumaTotal(mat,n-1,m,i);
     }
+
+    public static int ProductoTotal(int [][] mat, int n, int m, int i){
+
+        if(n == 0 && m == 0){
+            return mat[n][m];
+        }
+        else if(n == 0){
+            return mat[n][m]*ProductoTotal(mat,i,m-1,i);
+        }
+        else
+            return mat[n][m]*ProductoTotal(mat,n-1,m,i);
+    }
+
+    public static int SumaPrincipal(int [][] mat, int i){
+
+        int res = 0;
+        for (int j = 0; j < i; j++) {
+            res += mat[j][j];
+        }
+        return res;
+    }
+
+    public static int ProductoPrincipal(int [][] mat, int i){
+
+        int prod = 1;
+        for (int j = 0; j < i; j++) {
+            prod *= mat[j][j];
+        }
+        return prod;
+    }
+
+    public static int SumaSecundario(int [][] mat, int i) {
+        
+        int res = 0, k = i-1;
+        for (int j = 0; j < i; j++) {
+            res += mat[j][k-j];
+        }
+        return res;
+    }
+
+    public static int ProductoSecundario(int [][] mat, int i){
+
+        int prod = 1, k = i-1;
+        for (int j = 0; j < i; j++) {
+            prod *= mat[j][k-j];
+        }
+        return prod;
+    }
+
+    public static void GenerarTabla(Scanner read){
+
+        int number;
+
+        do{
+            System.out.println("Ingrese un número entre 2 y 9 (inclusive):");
+            number = read.nextInt;
+            if (number < 2 || number > 9){
+                System.out.println("Número fuera de rango. Intente nuevamente.");
+            }
+            else {
+                System.out.println("Tabla del "+number+":");
+                for (int i = 1; i <= 10; i++) {
+                    System.out.println(number+" x "+i+" = "+(number*i));
+                }
+            }
+        }while (number < 2 || number > 9);
+    }
+
+    public static void Convertidor(Scanner read) { //dolar blue $232.00 - euro blue $249.00 - real blue $52.00
+
+        int divisa, convertir;
+        float cifra;
+
+        System.out.println("Ingrese el tipo de divisa de entrada:");
+        System.out.println("1- Pesos.");
+        System.out.println("2- Dolar.");
+        System.out.println("3- Euro.");
+        System.out.println("4- Real.");
+        divisa = read.nextInt;
+        while (divisa > 4 || divisa < 1){
+            System.out.println("Código inválido. Intente nuevamente.");
+            System.out.println("Ingrese el tipo de divisa de entrada:");
+            System.out.println("1- Pesos.");
+            System.out.println("2- Dolar.");
+            System.out.println("3- Euro.");
+            System.out.println("4- Real.");
+            divisa = read.nextInt;
+        }
+        System.out.println("Ingrese el tipo de divisa de salida:");
+        System.out.println("1- Pesos.");
+        System.out.println("2- Dolar.");
+        System.out.println("3- Euro.");
+        System.out.println("4- Real.");
+        convertir = read.nextInt;
+        while (convertir>4 || convertir<1 || divisa == convertir){
+            System.out.println("Código inválido. Intente nuevamente.");
+            System.out.println("Ingrese el tipo de divisa de salida:");
+            System.out.println("1- Pesos.");
+            System.out.println("2- Dolar.");
+            System.out.println("3- Euro.");
+            System.out.println("4- Real.");
+            convertir = read.nextInt;
+        }
+        System.out.println("Cifra que desea convertir:");
+        cifra = read.nextFloat;
+        while (cifra < 0){
+            System.out.println("Valor incorrecto. Vuelva a ingresar por favor.");
+            System.out.println("Cifra que desea convertir:");
+            cifra = read.nextFloat;
+        }
+        if(divisa == 1){
+            if(convertir == 2){
+                System.out.println("El valor de "+cifra+" pesos es igual a "+(Math.round((cifra/232.0)*100.0)/100.0)+" dólares."); //valor del dolar al momento
+            } else if (convertir == 3) {
+                System.out.println("El valor de "+cifra+" pesos es igual a "+(Math.round((cifra/249.0)*100.0)/100.0)+" euros."); //valor del euro al momento
+            } else {
+                System.out.println("El valor de "+cifra+" pesos es igual a "+(Math.round((cifra/52.0)*100.0)/100.0)+" reales."); //valor del real al momento
+            }
+        } else if (divisa == 2) {
+            if (convertir == 1){
+                System.out.println("El valor de "+cifra+" dólares es igual a "+(Math.round((cifra*232.0)*100.0)/100.0)+" pesos.");
+            } else if (convertir == 3) {
+                System.out.println("El valor de "+cifra+" dólares es igual a "+(Math.round((cifra*232.0/249.0)*100.0)/100.0)+" euros.");
+            } else{
+                System.out.println("El valor de "+cifra+" dólares es igual a "+(Math.round((cifra*232.0/52.0)*100.0)/100.0)+" reales.");
+            }
+        } else if (divisa == 3) {
+            if (convertir == 1){
+                System.out.println("EL valor de "+cifra+" euros es igual a "+(Math.round((cifra*249.0)*100.0)/100.0)+" pesos.");
+            } else if (convertir == 2) {
+                System.out.println("EL valor de "+cifra+" euros es igual a "+(Math.round((cifra*249.0/232.0)*100.0)/100.0)+" dólares.");
+            } else {
+                System.out.println("EL valor de "+cifra+" euros es igual a "+(Math.round((cifra*249.0/52.0)*100.0)/100.0)+" reales.");
+            }
+        } else {
+            if (convertir == 1){
+                System.out.println("EL valor de "+cifra+" reales es igual a "+(Math.round((cifra*52.0)*100.0)/100.0)+" pesos.");
+            } else if (convertir == 2) {
+                System.out.println("EL valor de "+cifra+" reales es igual a "+(Math.round((cifra*52.0/232.0)*100.0)/100.0)+" dólares.");
+            } else {
+                System.out.println("EL valor de "+cifra+" reales es igual a "+(Math.round((cifra*52.0/249.0)*100.0)/100.0)+" euros.");
+            }
+        }
+    }
+
 }
